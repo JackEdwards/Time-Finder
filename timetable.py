@@ -1,12 +1,11 @@
 from day import *
 
 class Timetable:
-    days = {
-             "monday": Day(),
-             "tuesday": Day(),
-             "wednesday": Day(),
-             "thursday": Day(),
-             "friday": Day(),
-             "saturday": Day(),
-             "sunday": Day()
-           }
+	days = []
+
+	def __init__(self):
+		self.days.append(Day("Monday"))
+		self.days.append(Day("Tuesday"))
+		self.days.append(Day("Wednesday"))
+		self.days.append(Day("Thursday"))
+		self.days.append(Day("Friday"))
