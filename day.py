@@ -1,11 +1,10 @@
 from hour import *
 
 class Day:
-	name = None
-	hours = []
 
 	def __init__(self, name):
 		self.name = name
+		self.hours = []
 		self.hours.append(Hour("9 - 10"))
 		self.hours.append(Hour("10 - 11"))
 		self.hours.append(Hour("11 - 12"))

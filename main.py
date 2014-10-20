@@ -1,5 +1,3 @@
 from timetable import *
 
-timetables = [Timetable(), Timetable()]
-
-print(timetables[0].days[0].name)
+timetables = [Timetable("Jack's timetable"), Timetable("Jodie's timetable")]
