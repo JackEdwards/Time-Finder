@@ -55,3 +55,4 @@ class Timetable:
 				print("{0} from {1}: {2}".format(day.name, hour.name, hour.available))
 			print()
 		print()
+		input("Press enter to continue.")
