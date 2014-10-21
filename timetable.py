@@ -12,7 +12,6 @@ class Timetable:
 		self.days.append(Day("Friday"))
 
 	def load(self):
-		#if os.path.isfile("{0}.txt".format(self.name)):
 		f = open("{0}.txt".format(self.name), 'r')
 		for day in self.days:
 			for hour in day.hours:
@@ -32,7 +31,7 @@ class Timetable:
 
 	def update(self):
 		print("Update {0}!".format(self.name))
-		print("--------" + '-' * len(self.name))
+		print("--------{0}\n".format('-' * len(self.name)))
 		for day in self.days:
 			for hour in day.hours:
 				while True:
@@ -48,11 +47,10 @@ class Timetable:
 		self.save()
 
 	def display(self):
-		print("{0}".format(self.name))
-		print('-' * len(self.name))
+		print(self.name)
+		print('-' * len(self.name) + '\n')
 		for day in self.days:
 			for hour in day.hours:
 				print("{0} from {1}: {2}".format(day.name, hour.name, hour.available))
 			print()
-		print()
 		input("Press enter to continue.")
