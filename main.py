@@ -10,23 +10,39 @@ def get_timeslots():
 	jack_timeslots = []
 	jodie_timeslots = []
 
+	# Creates a list of timeslots for each timetable
 	for day in timetables[0].days:
 		for hour in day.hours:
-			jack_timeslots.append(Timeslot(day.name, hour.name, hour.available))
+			jack_timeslots.append(Timeslot(day.name, hour.start_hour, hour.end_hour, hour.available))
 	for day in timetables[1].days:
 		for hour in day.hours:
-			jodie_timeslots.append(Timeslot(day.name, hour.name, hour.available))
+			jodie_timeslots.append(Timeslot(day.name, hour.start_hour, hour.end_hour, hour.available))
 
-	for x in range(45):
+	# Uses the two lists to create a new list of available timeslots
+	for x in range(50):
 		if jack_timeslots[x].available == True and jodie_timeslots[x].available == True:
-			available_timeslots.append(Timeslot(jack_timeslots[x].day, jack_timeslots[x].hour, jack_timeslots[x].available))
+			available_timeslots.append(Timeslot(jack_timeslots[x].day_name, jack_timeslots[x].start_hour, jack_timeslots[x].end_hour, jack_timeslots[x].available))
 
+	# Merges any sibling timeslots into single timeslots
+	for x in range(len(available_timeslots)):
+		while True:
+			if x + 1 < len(available_timeslots):
+				if available_timeslots[x].end_hour == available_timeslots[x + 1].start_hour:
+					available_timeslots[x].end_hour == available_timeslots[x + 1].end_hour
+					available_timeslots.pop(x + 1)
+				else:
+					break
+			else:
+				break
+
+	# Prints available timeslots to the console
 	for timeslot in available_timeslots:
-		print("{0} at {1}.".format(timeslot.day, timeslot.hour))
+		print("{0} at {1} - {2}.".format(timeslot.day_name, timeslot.start_hour, timeslot.end_hour))
 
+	# Saves available timeslots to a .txt file
 	f = open("available-timeslots.txt", 'w')
 	for timeslot in available_timeslots:
-		f.write("{0} at {1}.\n".format(timeslot.day, timeslot.hour))
+		f.write("{0} at {1} - {2}.\n".format(timeslot.day_name, timeslot.start_hour, timeslot.end_hour))
 
 	input("Press enter to continue.")
 

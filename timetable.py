@@ -12,14 +12,15 @@ class Timetable:
 		self.days.append(Day("Friday"))
 
 	def load(self):
-		f = open("{0}.txt".format(self.name), 'r')
-		for day in self.days:
-			for hour in day.hours:
-				current_line = f.readline()
-				if current_line == "True\n":
-					hour.available = True
-				elif current_line == "False\n":
-					hour.available = False
+		if os.path.isfile("{0}.txt".format(self.name)):
+			f = open("{0}.txt".format(self.name), 'r')
+			for day in self.days:
+				for hour in day.hours:
+					current_line = f.readline()
+					if current_line == "True\n":
+						hour.available = True
+					elif current_line == "False\n":
+						hour.available = False
 
 	def save(self):
 		f = open("{0}.txt".format(self.name), 'w')
