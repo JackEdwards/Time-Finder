@@ -24,20 +24,21 @@ def get_timeslots():
 			available_timeslots.append(Timeslot(jack_timeslots[x].day_name, jack_timeslots[x].start_hour, jack_timeslots[x].end_hour, jack_timeslots[x].available))
 
 	# Merges any sibling timeslots into single timeslots
-	for x in range(len(available_timeslots)):
-		while True:
-			if x + 1 < len(available_timeslots):
-				if available_timeslots[x].end_hour == available_timeslots[x + 1].start_hour:
-					available_timeslots[x].end_hour == available_timeslots[x + 1].end_hour
-					available_timeslots.pop(x + 1)
-				else:
-					break
+	x = 0
+	while True:
+		while x + 1 < len(available_timeslots):
+			if available_timeslots[x].end_hour == available_timeslots[x + 1].start_hour:
+				available_timeslots[x].end_hour = available_timeslots[x + 1].end_hour
+				available_timeslots.pop(x + 1)
 			else:
 				break
+		x = x + 1
+		if x + 1 >= len(available_timeslots):
+			break
 
 	# Prints available timeslots to the console
 	for timeslot in available_timeslots:
-		print("{0} at {1} - {2}.".format(timeslot.day_name, timeslot.start_hour, timeslot.end_hour))
+		print("{0} at {1}{2} - {3}{4}.".format(timeslot.day_name, timeslot.start_hour, timeslot.start_period, timeslot.end_hour, timeslot.end_period))
 
 	# Saves available timeslots to a .txt file
 	f = open("available-timeslots.txt", 'w')
