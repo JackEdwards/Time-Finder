@@ -2,8 +2,10 @@ import os
 
 from timetable import *
 from timeslot import *
+from graphical_timetable import *
 
 timetables = [ Timetable("Jack's timetable"), Timetable("Jodie's timetable") ]
+graphical_timetable = GraphicalTimetable()
 available_timeslots = []
 
 def get_timeslots():
@@ -21,31 +23,9 @@ def get_timeslots():
 	# Uses the two lists to create a new list of available timeslots
 	for x in range(50):
 		if jack_timeslots[x].available == True and jodie_timeslots[x].available == True:
-			available_timeslots.append(Timeslot(jack_timeslots[x].day_name, jack_timeslots[x].start_hour, jack_timeslots[x].end_hour, jack_timeslots[x].available))
-
-	# Merges any sibling timeslots into single timeslots
-	x = 0
-	while True:
-		while x + 1 < len(available_timeslots):
-			if available_timeslots[x].end_hour == available_timeslots[x + 1].start_hour:
-				available_timeslots[x].end_hour = available_timeslots[x + 1].end_hour
-				available_timeslots.pop(x + 1)
-			else:
-				break
-		x = x + 1
-		if x + 1 >= len(available_timeslots):
-			break
-
-	# Prints available timeslots to the console
-	for timeslot in available_timeslots:
-		print("{0} at {1}{2} - {3}{4}.".format(timeslot.day_name, timeslot.start_hour, timeslot.start_period, timeslot.end_hour, timeslot.end_period))
-
-	# Saves available timeslots to a .txt file
-	f = open("available-timeslots.txt", 'w')
-	for timeslot in available_timeslots:
-		f.write("{0} at {1} - {2}.\n".format(timeslot.day_name, timeslot.start_hour, timeslot.end_hour))
-
-	input("Press enter to continue.")
+			available_timeslots.append(Timeslot(jack_timeslots[x].day_name, jack_timeslots[x].start_hour, jack_timeslots[x].end_hour, True))
+		else:
+			available_timeslots.append(Timeslot(jack_timeslots[x].day_name, jack_timeslots[x].start_hour, jack_timeslots[x].end_hour, False))
 
 def clear():
 	os.system("cls" if os.name == "nt" else "clear")
@@ -67,7 +47,7 @@ def get_command():
 	print("What would you like to do?\n")
 	print("1. Display")
 	print("2. Update")
-	print("3. Display available")
+	print("3. Display graphical timetable")
 	print("4. Quit")
 
 	while True:
@@ -102,6 +82,7 @@ def main():
 			timetable.update()
 		elif command == '3':
 			get_timeslots()
+			graphical_timetable.display(available_timeslots)
 		elif command == '4':
 			break
 
