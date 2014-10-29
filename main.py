@@ -37,6 +37,7 @@ def get_timetable(only_dynamic):
 	if not only_dynamic:
 		for x in range(len(timetables)):
 			print("{0}. {1}".format(str(x + 1), timetables[x].name))
+		print("{0}. Back".format(str(len(timetables) + 1)))
 		while True:
 			try:
 				choice = int(input("\nEnter your choice: "))
@@ -45,6 +46,8 @@ def get_timetable(only_dynamic):
 				continue
 			if choice >= 1 and choice <= len(timetables):
 				return timetables[choice - 1]
+			elif choice == len(timetables) + 1:
+				return None
 			else:
 				print("\nInvalid input.")
 
@@ -54,18 +57,21 @@ def get_timetable(only_dynamic):
 			if type(timetable) is DynamicTimetable:
 				dynamic_timetables.append(timetable)
 	
-	for x in range(len(dynamic_timetables)):
-		print("{0}. {1}".format(str(x + 1), dynamic_timetables[x].name))
-	while True:
-		try:
-			choice = int(input("\nEnter your choice: "))
-		except ValueError:
-			print("\nInvalid input.")
-			continue
-		if choice >= 1 and choice <= len(dynamic_timetables):
-			return dynamic_timetables[choice - 1]
-		else:
-			print("\nInvalid input.")
+		for x in range(len(dynamic_timetables)):
+			print("{0}. {1}".format(str(x + 1), dynamic_timetables[x].name))
+		print("{0}. Back".format(str(len(dynamic_timetables) + 1)))
+		while True:
+			try:
+				choice = int(input("\nEnter your choice: "))
+			except ValueError:
+				print("\nInvalid input.")
+				continue
+			if choice >= 1 and choice <= len(dynamic_timetables):
+				return dynamic_timetables[choice - 1]
+			elif choice == len(dynamic_timetables) + 1:
+				return None
+			else:
+				print("\nInvalid input.")
 
 def get_day():
 	print("Which day would you like to update?\n")
@@ -75,6 +81,7 @@ def get_day():
 	print("4. Thursday")
 	print("5. Friday")
 	print("6. All")
+	print("7. Back")
 
 	while True:
 		try:
@@ -85,6 +92,8 @@ def get_day():
 		if choice >= 1 and choice <= 6:
 			clear()
 			return choice - 1
+		elif choice == 7:
+			return None
 		else:
 			print("\nInvalid input.")
 
@@ -94,6 +103,7 @@ def main():
 		timetable.load()
 
 	while True:
+		timetables[2].update(timetables[0], timetables[1])
 		clear()
 		command = get_command()
 		clear()
@@ -101,14 +111,21 @@ def main():
 		# Display
 		if command == 1:
 			timetable = get_timetable(False)
+			if timetable == None:
+				continue
 			clear()
 			timetable.display()
 
 		# Update
 		elif command == 2:
 			timetable = get_timetable(True)
+			if timetable == None:
+				continue
 			clear()
-			timetable.update(get_day())
+			choice = get_day()
+			if choice == None:
+				continue
+			timetable.update(choice)
 
 		# Quit
 		elif command == 3:

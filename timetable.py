@@ -162,4 +162,10 @@ class DynamicTimetable(Timetable):
 
 class StaticTimetable(Timetable):
 	def update(self, timetable_a, timetable_b):
-		pass
+		for x in range(5):
+			for y in range(10):
+				if timetable_a.days[x].hours[y].available == True and timetable_b.days[x].hours[y].available == True:
+					self.days[x].hours[y].available = True
+				else:
+					self.days[x].hours[y].available = False
+		self.save()
