@@ -29,41 +29,6 @@ class Timetable:
 			for hour in day.hours:
 				f.write("{0}\n".format(str(hour.available)))
 
-	def update(self, choice):
-		if choice == 5:
-			print("Update {0}!".format(self.name))
-			print("--------{0}\n".format('-' * len(self.name)))
-			for day in self.days:
-				for hour in day.hours:
-					while True:
-						answer = input("Are you available on {0}, {1}? ".format(day.name, hour.name))
-						if answer == 'y':
-							hour.available = True
-							break
-						elif answer == 'n':
-							hour.available = False
-							break
-						else:
-							print("Invalid input.")
-		else:
-			print("Update {0}!".format(self.name))
-			print("--------{0}\n".format('-' * len(self.name)))
-			for hour in self.days[choice].hours:
-				while True:
-					answer = input("Are you available on {0}, {1}? ".format(self.days[choice].name, hour.name))
-					if answer == 'y':
-						hour.available = True
-						break
-					elif answer == 'n':
-						hour.available = False
-						break
-					else:
-						print("Invalid input.")
-
-		self.save()
-		os.system("cls" if os.name == "nt" else "clear")
-		self.display()
-
 	def display(self):
 		# Gets the amount of spaces that should be placed between the timetable name
 		left_spaces = ' ' * int((83 - len(self.name)) / 2)
@@ -158,3 +123,43 @@ class Timetable:
 			for row in day:
 				f.write(row + '\n')
 		input("Press enter to continue.")
+
+class DynamicTimetable(Timetable):
+	def update(self, choice):
+		if choice == 5:
+			print("Update {0}!".format(self.name))
+			print("--------{0}\n".format('-' * len(self.name)))
+			for day in self.days:
+				for hour in day.hours:
+					while True:
+						answer = input("Are you available on {0}, {1}? ".format(day.name, hour.name))
+						if answer == 'y':
+							hour.available = True
+							break
+						elif answer == 'n':
+							hour.available = False
+							break
+						else:
+							print("Invalid input.")
+		else:
+			print("Update {0}!".format(self.name))
+			print("--------{0}\n".format('-' * len(self.name)))
+			for hour in self.days[choice].hours:
+				while True:
+					answer = input("Are you available on {0}, {1}? ".format(self.days[choice].name, hour.name))
+					if answer == 'y':
+						hour.available = True
+						break
+					elif answer == 'n':
+						hour.available = False
+						break
+					else:
+						print("Invalid input.")
+
+		self.save()
+		os.system("cls" if os.name == "nt" else "clear")
+		self.display()
+
+class StaticTimetable(Timetable):
+	def update(self, timetable_a, timetable_b):
+		pass
