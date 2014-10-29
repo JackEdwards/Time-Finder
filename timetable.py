@@ -61,8 +61,8 @@ class Timetable:
 						print("Invalid input.")
 
 		self.save()
+		os.system("cls" if os.name == "nt" else "clear")
 		self.display()
-		input("\nTimetable updated!\nPress enter to continue.")
 
 	def display(self):
 		# Gets the amount of spaces that should be placed between the timetable name
